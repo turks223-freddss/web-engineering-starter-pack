@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Event Propagation</title>
-
-        <style>
-            #t-daddy {
-                border: 1px solid red;
-            }
-            #c1 {
-                background-color: pink;
-            }
-        </style>
+        <title>getComputedStyle example</title>
 
         <script>
-            function stopEvent(event) {
-                const c2 = document.getElementById('c2');
-                c2.textContent = 'hello';
+            function cStyles() {
+                const RefDiv = document.getElementById('d1');
+                const txtHeight = document.getElementById('t1');
+                const h_style = document.defaultView
+                    .getComputedStyle(RefDiv, null)
+                    .getPropertyValue('height');
 
-                // this ought to keep t-daddy from getting the click.
-                event.stopPropagation();
-                alert('event propagation halted.');
-            }
+                txtHeight.value = h_style;
 
-            function load() {
-                const elem = document.getElementById('tbl1');
-                elem.addEventListener('click', stopEvent, false);
+                const txtWidth = document.getElementById('t2');
+                const w_style = document.defaultView
+                    .getComputedStyle(RefDiv, null)
+                    .getPropertyValue('width');
+
+                txtWidth.value = w_style;
+
+                const txtBackgroundColor = document.getElementById('t3');
+                const b_style = document.defaultView
+                    .getComputedStyle(RefDiv, null)
+                    .getPropertyValue('background-color');
+
+                txtBackgroundColor.value = b_style;
             }
         </script>
+
+        <style>
+            #d1 {
+                margin-left: 10px;
+                background-color: rgb(173 216 230);
+                height: 20px;
+                max-width: 20px;
+            }
+        </style>
     </head>
 
-    <body onload="load();">
-        <table id="t-daddy" onclick="alert('hi');">
-            <tr id="tbl1">
-                <td id="c1">one</td>
-            </tr>
-            <tr>
-                <td id="c2">two</td>
-            </tr>
-        </table>
+    <body>
+        <div id="d1">&nbsp;</div>
+
+        <form action="">
+            <p>
+                <button type="button" onclick="cStyles();">
+                    getComputedStyle
+                </button>
+                height<input id="t1" type="text" value="1" /> max-width<input
+                    id="t2"
+                    type="text"
+                    value="2"
+                />
+                bg-color<input id="t3" type="text" value="3" />
+            </p>
+        </form>
     </body>
 </html>
